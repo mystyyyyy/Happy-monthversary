@@ -688,13 +688,9 @@ function showBubble(data, flower){
   if(left + bubbleWidth > window.innerWidth){
     left = flowerRect.left - bubbleWidth - gap;
   }
-
-  if(left < 10){
-    left = 10;
-  }
   
   bubble.style.left = left + "px";
-  bubble.style.top = (flowerRect.top + 45) + "px";
+  bubble.style.top = (flowerRect.top + 40) + "px";
 
   setTimeout(() => bubble.remove(), 12000);
 }

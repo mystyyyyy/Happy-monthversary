@@ -500,7 +500,7 @@ button{
 </div>
 
 <div id="topControls">
-  <h1>Taiga's Garden</h1>
+  <h1>Your Garden</h1>
   <button id="growButton" onclick="growFlower()">Plant the Purple Hyacinth</button>
 </div>
 
@@ -646,12 +646,12 @@ function growFlower(){
     `;
   }
 
-  garden.appendChild(flower);
+ garden.appendChild(flower);
 
-  flower.querySelectorAll(".hy-petal").forEach(x => x.style.background = data.colour);
-  flower.querySelectorAll(".fm-petal").forEach(x => x.style.background = data.colour);
+flower.querySelectorAll(".hy-petal").forEach(x => x.style.background = data.colour);
+flower.querySelectorAll(".fm-petal").forEach(x => x.style.background = data.colour);
 
-  showBubble(data);
+showBubble(data, flower);
 
   flowerCount++;
 
@@ -669,16 +669,20 @@ function growFlower(){
   }
 }
 
-function showBubble(data){
+function showBubble(data, flower){
+
   document.querySelectorAll(".bubble").forEach(b => b.remove());
 
   const bubble = document.createElement("div");
   bubble.className = "bubble";
-  bubble.style.left = data.bubbleLeft;
-  bubble.style.bottom = data.bubbleBottom;
   bubble.innerHTML = data.message;
 
   document.body.appendChild(bubble);
+
+  const flowerRect = flower.getBoundingClientRect();
+
+  bubble.style.left = (flowerRect.right + 20) + "px";
+  bubble.style.top = (flowerRect.top + 40) + "px";
 
   setTimeout(() => bubble.remove(), 12000);
 }

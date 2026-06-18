@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taiga's Garden</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  overflow:hidden;
+  font-family:"Bodoni MT", Georgia, serif;
+  background:linear-gradient(to bottom,#dbeeff 0%,#fff4f8 55%,#b7d88a 100%);
+  color:#3d2f36;
+}
+
+.page{
+  position:relative;
+  z-index:5;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:24px;
+}
+
+.card{
+  width:90%;
+  max-width:620px;
+  background:rgba(255,255,255,0.88);
+  border-radius:28px;
+  padding:30px;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,0.15);
+  backdrop-filter:blur(6px);
+}
+
+h1,h2{
+  font-family:Castellar, Georgia, serif;
+  color:#b84b72;
+  letter-spacing:1px;
+}
+
+button{
+  border:none;
+  padding:13px 24px;
+  border-radius:30px;
+  background:#c95f86;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  margin-top:15px;
+  font-family:"Bodoni MT", Georgia, serif;
+}
+
+button:hover{
+  background:#a94469;
+}
+
+#messageBox{
+  display:none;
+  margin-top:20px;
+  font-size:18px;
+  line-height:1.5;
+}
+
+.garden{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:42vh;
+  background:linear-gradient(to bottom,#90c66d,#4f914c);
+  border-radius:50% 50% 0 0 / 18% 18% 0 0;
+  z-index:1;
+}
+
+.soil{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:90px;
+  background:#6b442f;
+  z-index:2;
+}
+
+.flower{
+  position:absolute;
+  bottom:60px;
+  width:120px;
+  height:260px;
+  transform-origin:bottom center;
+  animation:sway 4s ease-in-out infinite;
+}
+
+@keyframes sway{
+  0%,100%{transform:rotate(-1deg);}
+  50%{transform:rotate(1deg);}
+}
+
+.stem{
+  position:absolute;
+  bottom:0;
+  left:57px;
+  width:7px;
+  height:0;
+  background:#2f7d3f;
+  border-radius:20px;
+  animation:growStem 1.6s forwards;
+}
+
+@keyframes growStem{
+  to{height:170px;}
+}
+
+.leaf{
+  position:absolute;
+  bottom:70px;
+  width:45px;
+  height:22px;
+  background:#3e9b55;
+  border-radius:50%;
+  opacity:0;
+  animation:appear 1s forwards 1s;
+}
+
+.leaf.left{
+  left:23px;
+  transform:rotate(-35deg);
+}
+
+.leaf.right{
+  right:23px;
+  transform:rotate(35deg);
+}
+
+@keyframes appear{
+  to{opacity:1;}
+}
+
+.bloom{
+  position:absolute;
+  bottom:160px;
+  left:35px;
+  width:58px;
+  height:58px;
+  transform:scale(0);
+  animation:bloom 1.2s forwards 1.6s;
+}
+
+@keyframes bloom{
+  to{transform:scale(1);}
+}
+
+.petal{
+  position:absolute;
+  width:30px;
+  height:42px;
+  border-radius:50%;
+}
+
+.centre{
+  position:absolute;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  background:#f3c64a;
+  top:19px;
+  left:19px;
+  z-index:3;
+}
+
+/* hyacinth cluster */
+.hyacinth .petal{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+}
+
+.hyacinth .p1{left:20px;top:0;}
+.hyacinth .p2{left:8px;top:20px;}
+.hyacinth .p3{left:32px;top:20px;}
+.hyacinth .p4{left:20px;top:38px;}
+.hyacinth .p5{left:20px;top:19px;}
+.hyacinth .centre{display:none;}
+
+/* forget-me-not */
+.forget .p1{top:-18px;left:14px;}
+.forget .p2{bottom:-18px;left:14px;}
+.forget .p3{left:-12px;top:8px;transform:rotate(90deg);}
+.forget .p4{right:-12px;top:8px;transform:rotate(90deg);}
+.forget .p5{display:none;}
+
+/* sunflower */
+.sunflower .bloom{
+  width:82px;
+  height:82px;
+  left:20px;
+  bottom:165px;
+}
+
+.sunflower .petal{
+  background:#f5c542;
+  width:24px;
+  height:48px;
+  left:29px;
+  top:17px;
+  transform-origin:center 24px;
+}
+
+.sunflower .p1{transform:rotate(0deg) translateY(-28px);}
+.sunflower .p2{transform:rotate(45deg) translateY(-28px);}
+.sunflower .p3{transform:rotate(90deg) translateY(-28px);}
+.sunflower .p4{transform:rotate(135deg) translateY(-28px);}
+.sunflower .p5{transform:rotate(180deg) translateY(-28px);}
+.sunflower .p6{transform:rotate(225deg) translateY(-28px);}
+.sunflower .p7{transform:rotate(270deg) translateY(-28px);}
+.sunflower .p8{transform:rotate(315deg) translateY(-28px);}
+
+.sunflower .centre{
+  width:34px;
+  height:34px;
+  background:#6b3e1f;
+  top:24px;
+  left:24px;
+}
+
+.fallingPetal{
+  position:fixed;
+  top:-40px;
+  width:14px;
+  height:20px;
+  border-radius:50%;
+  background:#f6c8d8;
+  animation:fall 7s linear forwards;
+  z-index:10;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(360deg);
+    opacity:0;
+  }
+}
+
+.cat{
+  position:fixed;
+  bottom:74px;
+  left:-120px;
+  width:70px;
+  height:35px;
+  background:#2f2f2f;
+  border-radius:50px 50px 35px 35px;
+  z-index:4;
+  animation:walk 10s linear forwards;
+}
+
+.cat:before{
+  content:"";
+  position:absolute;
+  width:28px;
+  height:28px;
+  background:#2f2f2f;
+  border-radius:50%;
+  right:-10px;
+  top:-10px;
+}
+
+.cat:after{
+  content:"";
+  position:absolute;
+  width:35px;
+  height:6px;
+  background:#2f2f2f;
+  left:-28px;
+  top:12px;
+  border-radius:10px;
+  transform:rotate(25deg);
+}
+
+@keyframes walk{
+  to{left:110%;}
+}
+
+#ending{
+  display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="garden" id="garden"></div>
+<div class="soil"></div>
+
+<div class="page">
+  <div class="card" id="mainCard">
+    <h1>Taiga's Garden</h1>
+    <p>Happy Two Months, Amore.</p>
+    <p>Plant each seed and let the garden grow.</p>
+
+    <button id="growButton" onclick="growFlower()">Plant the First Seed</button>
+
+    <div id="messageBox"></div>
+  </div>
+
+  <div class="card" id="ending">
+    <h2>Garden Complete</h2>
+    <p>Five flowers grown.</p>
+    <p>Five little pieces of my heart shared.</p>
+    <p>Happy Two Months, Amore.</p>
+    <p>Thank you for helping this little garden grow.</p>
+  </div>
+</div>
+
+<audio id="song" src="Grandine.mp3"></audio>
+
+<script>
+let flowerCount = 0;
+
+const flowers = [
+  {
+    type:"hyacinth",
+    colour:"#8b5cf6",
+    left:"10%",
+    message:"I love your gentle, pensive eyes, your adorable cheeky smile, and your voice. They are some of the things I never get tired of."
+  },
+  {
+    type:"hyacinth",
+    colour:"#fffaf0",
+    left:"27%",
+    message:"One of my favourite things is seeing you smile or laugh. I still think about sitting together on the grass by the fountain, and playing Street Fighter at Firebug for the first time."
+  },
+  {
+    type:"forget",
+    colour:"#7eb6ff",
+    left:"45%",
+    message:"You reminded me what it feels like to truly love someone again. That is something I will always be grateful for."
+  },
+  {
+    type:"forget",
+    colour:"#ffffff",
+    left:"62%",
+    message:"I am excited to make more memories with you, share more experiences, and discover all the little moments we have not had yet."
+  },
+  {
+    type:"sunflower",
+    colour:"#f5c542",
+    left:"79%",
+    message:"These first two months have meant more than you realise, and more than I can properly put into words."
+  }
+];
+
+function growFlower(){
+  if(flowerCount >= flowers.length) return;
+
+  const data = flowers[flowerCount];
+  const garden = document.getElementById("garden");
+  const flower = document.createElement("div");
+
+  flower.className = "flower " + data.type;
+  flower.style.left = data.left;
+
+  if(data.type === "sunflower"){
+    flower.innerHTML = `
+      <div class="stem"></div>
+      <div class="leaf left"></div>
+      <div class="leaf right"></div>
+      <div class="bloom">
+        <div class="petal p1"></div>
+        <div class="petal p2"></div>
+        <div class="petal p3"></div>
+        <div class="petal p4"></div>
+        <div class="petal p5"></div>
+        <div class="petal p6"></div>
+        <div class="petal p7"></div>
+        <div class="petal p8"></div>
+        <div class="centre"></div>
+      </div>
+    `;
+  } else {
+    flower.innerHTML = `
+      <div class="stem"></div>
+      <div class="leaf left"></div>
+      <div class="leaf right"></div>
+      <div class="bloom">
+        <div class="petal p1"></div>
+        <div class="petal p2"></div>
+        <div class="petal p3"></div>
+        <div class="petal p4"></div>
+        <div class="petal p5"></div>
+        <div class="centre"></div>
+      </div>
+    `;
+  }
+
+  garden.appendChild(flower);
+
+  const petals = flower.querySelectorAll(".petal");
+  petals.forEach(petal => {
+    petal.style.background = data.colour;
+  });
+
+  const messageBox = document.getElementById("messageBox");
+  messageBox.style.display = "block";
+  messageBox.innerHTML = data.message;
+
+  flowerCount++;
+
+  const button = document.getElementById("growButton");
+
+  if(flowerCount === 1){
+    button.innerHTML = "Grow the White Hyacinth";
+  } else if(flowerCount === 2){
+    button.innerHTML = "Grow the Blue Forget-Me-Not";
+  } else if(flowerCount === 3){
+    button.innerHTML = "Grow the White Forget-Me-Not";
+    showCat();
+  } else if(flowerCount === 4){
+    button.innerHTML = "Grow the Sunflower";
+  } else {
+    button.innerHTML = "Complete the Garden";
+    setTimeout(showEnding, 2200);
+  }
+}
+
+function showCat(){
+  const cat = document.createElement("div");
+  cat.className = "cat";
+  document.body.appendChild(cat);
+
+  setTimeout(() => {
+    cat.remove();
+  }, 10000);
+}
+
+function showEnding(){
+  document.getElementById("mainCard").style.display = "none";
+  document.getElementById("ending").style.display = "block";
+
+  document.getElementById("song").play().catch(() => {});
+
+  for(let i = 0; i < 90; i++){
+    setTimeout(createFallingPetal, i * 80);
+  }
+}
+
+function createFallingPetal(){
+  const petal = document.createElement("div");
+  petal.className = "fallingPetal";
+  petal.style.left = Math.random() * 100 + "vw";
+  petal.style.background = Math.random() > 0.5 ? "#f6c8d8" : "#fffaf0";
+  document.body.appendChild(petal);
+
+  setTimeout(() => {
+    petal.remove();
+  }, 7000);
+}
+</script>
+
+</body>
+</html>

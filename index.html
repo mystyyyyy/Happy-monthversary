@@ -680,9 +680,21 @@ function showBubble(data, flower){
   document.body.appendChild(bubble);
 
   const flowerRect = flower.getBoundingClientRect();
+  const bubbleWidth = 260;
+  const gap = 20;
 
-  bubble.style.left = (flowerRect.right + 20) + "px";
-  bubble.style.top = (flowerRect.top + 40) + "px";
+  let left = flowerRect.right + gap;
+
+  if(left + bubbleWidth > window.innerWidth){
+    left = flowerRect.left - bubbleWidth - gap;
+  }
+
+  if(left < 10){
+    left = 10;
+  }
+  
+  bubble.style.left = left + "px";
+  bubble.style.top = (flowerRect.top + 45) + "px";
 
   setTimeout(() => bubble.remove(), 12000);
 }

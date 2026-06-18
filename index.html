@@ -6,43 +6,40 @@
 <title>Taiga's Garden</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box;}
 
 body{
   margin:0;
   min-height:100vh;
   overflow:hidden;
   font-family:"Bodoni MT", Georgia, serif;
-  background:linear-gradient(to bottom,#dbeeff 0%,#fff4f8 55%,#b7d88a 100%);
+  background:linear-gradient(to bottom,#dcefff 0%,#fff4f8 45%,#aad37e 100%);
   color:#3d2f36;
 }
 
-.page{
-  position:relative;
-  z-index:5;
-  min-height:100vh;
+#intro{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(to bottom,#dcefff,#fff4f8);
   display:flex;
-  justify-content:center;
   align-items:center;
-  padding:24px;
+  justify-content:center;
+  z-index:50;
 }
 
 .card{
   width:90%;
-  max-width:620px;
-  background:rgba(255,255,255,0.88);
+  max-width:600px;
+  background:rgba(255,255,255,0.92);
   border-radius:28px;
   padding:30px;
   text-align:center;
-  box-shadow:0 15px 40px rgba(0,0,0,0.15);
+  box-shadow:0 15px 40px rgba(0,0,0,0.16);
 }
 
 h1,h2{
   font-family:Castellar, Georgia, serif;
   color:#b84b72;
-  letter-spacing:1px;
 }
 
 button{
@@ -53,29 +50,22 @@ button{
   color:white;
   font-size:16px;
   cursor:pointer;
-  margin-top:15px;
   font-family:"Bodoni MT", Georgia, serif;
 }
 
-#intro{
+#topControls{
   position:fixed;
-  inset:0;
-  z-index:20;
-  background:linear-gradient(to bottom,#dbeeff,#fff4f8);
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  top:18px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:30;
+  display:none;
+  text-align:center;
 }
 
-#mainCard{
-  display:none;
-}
-
-#messageBox{
-  display:none;
-  margin-top:20px;
-  font-size:18px;
-  line-height:1.5;
+#topControls h1{
+  margin:0 0 8px;
+  font-size:26px;
 }
 
 .garden{
@@ -83,9 +73,9 @@ button{
   bottom:0;
   left:0;
   width:100%;
-  height:42vh;
-  background:linear-gradient(to bottom,#90c66d,#4f914c);
-  border-radius:50% 50% 0 0 / 18% 18% 0 0;
+  height:62vh;
+  background:linear-gradient(to bottom,#9fd47a,#4f914c);
+  border-radius:50% 50% 0 0 / 16% 16% 0 0;
   z-index:1;
 }
 
@@ -94,16 +84,17 @@ button{
   bottom:0;
   left:0;
   width:100%;
-  height:90px;
+  height:95px;
   background:#6b442f;
   z-index:2;
 }
 
 .flower{
   position:absolute;
-  bottom:60px;
-  width:120px;
-  height:260px;
+  bottom:70px;
+  width:130px;
+  height:290px;
+  z-index:8;
   transform-origin:bottom center;
   animation:sway 4s ease-in-out infinite;
 }
@@ -116,125 +107,365 @@ button{
 .stem{
   position:absolute;
   bottom:0;
-  left:57px;
+  left:62px;
   width:7px;
   height:0;
   background:#2f7d3f;
   border-radius:20px;
-  animation:growStem 1.6s forwards;
+  animation:growStem 1.5s forwards;
 }
 
 @keyframes growStem{
-  to{height:170px;}
+  to{height:185px;}
 }
 
 .leaf{
   position:absolute;
-  bottom:70px;
-  width:45px;
-  height:22px;
+  bottom:82px;
+  width:48px;
+  height:24px;
   background:#3e9b55;
   border-radius:50%;
   opacity:0;
-  animation:appear 1s forwards 1s;
+  animation:appear 0.8s forwards 1s;
 }
 
-.leaf.left{
-  left:23px;
-  transform:rotate(-35deg);
-}
+.leaf.left{left:24px;transform:rotate(-35deg);}
+.leaf.right{right:24px;transform:rotate(35deg);}
 
-.leaf.right{
-  right:23px;
-  transform:rotate(35deg);
-}
+@keyframes appear{to{opacity:1;}}
 
-@keyframes appear{
-  to{opacity:1;}
-}
+/* nicer hyacinths */
 
-.bloom{
+.hyacinth-bloom{
   position:absolute;
-  bottom:160px;
+  bottom:168px;
   left:35px;
-  width:58px;
-  height:58px;
+  width:64px;
+  height:100px;
   transform:scale(0);
-  animation:bloom 1.2s forwards 1.6s;
+  transform-origin:bottom center;
+  animation:bloom 1.2s forwards 1.5s;
 }
 
 @keyframes bloom{
   to{transform:scale(1);}
 }
 
-.petal{
-  position:absolute;
-  width:30px;
-  height:42px;
-  border-radius:50%;
-}
-
-.centre{
+.hy-petal{
   position:absolute;
   width:20px;
   height:20px;
+  border-radius:60% 40% 60% 40%;
+  box-shadow:0 2px 6px rgba(0,0,0,0.15);
+  transform:rotate(45deg);
+}
+
+.hy1{left:22px;top:0;}
+.hy2{left:12px;top:14px;}
+.hy3{left:32px;top:14px;}
+.hy4{left:3px;top:30px;}
+.hy5{left:22px;top:30px;}
+.hy6{left:41px;top:30px;}
+.hy7{left:12px;top:48px;}
+.hy8{left:32px;top:48px;}
+.hy9{left:3px;top:66px;}
+.hy10{left:22px;top:66px;}
+.hy11{left:41px;top:66px;}
+.hy12{left:22px;top:84px;}
+
+.hy-highlight{
+  position:absolute;
+  width:7px;
+  height:7px;
   border-radius:50%;
-  background:#f3c64a;
-  top:19px;
-  left:19px;
+  background:rgba(255,255,255,0.55);
+  top:4px;
+  left:4px;
+}
+
+/* forget-me-not */
+
+.forget-bloom{
+  position:absolute;
+  bottom:172px;
+  left:25px;
+  width:82px;
+  height:82px;
+  transform:scale(0);
+  animation:bloom 1.1s forwards 1.5s;
+}
+
+.small-flower{
+  position:absolute;
+  width:38px;
+  height:38px;
+}
+
+.small-flower.one{left:0;top:28px;}
+.small-flower.two{left:22px;top:0;}
+.small-flower.three{left:42px;top:32px;}
+
+.fm-petal{
+  position:absolute;
+  width:16px;
+  height:21px;
+  background:#7eb6ff;
+  border-radius:50%;
+}
+
+.fm1{top:-5px;left:11px;}
+.fm2{bottom:-5px;left:11px;}
+.fm3{left:-3px;top:8px;transform:rotate(90deg);}
+.fm4{right:-3px;top:8px;transform:rotate(90deg);}
+.fm5{left:11px;top:8px;transform:rotate(45deg);opacity:.75;}
+
+.fm-centre{
+  position:absolute;
+  width:9px;
+  height:9px;
+  background:#f7d35b;
+  border-radius:50%;
+  top:14px;
+  left:14px;
+  z-index:2;
+}
+
+/* sunflower */
+
+.sunflower-bloom{
+  position:absolute;
+  bottom:164px;
+  left:17px;
+  width:96px;
+  height:96px;
+  transform:scale(0);
+  animation:bloom 1.3s forwards 1.5s;
+}
+
+.sun-petal{
+  position:absolute;
+  width:26px;
+  height:54px;
+  background:#f5c542;
+  border-radius:50%;
+  left:35px;
+  top:20px;
+  transform-origin:center 28px;
+}
+
+.s1{transform:rotate(0deg) translateY(-34px);}
+.s2{transform:rotate(30deg) translateY(-34px);}
+.s3{transform:rotate(60deg) translateY(-34px);}
+.s4{transform:rotate(90deg) translateY(-34px);}
+.s5{transform:rotate(120deg) translateY(-34px);}
+.s6{transform:rotate(150deg) translateY(-34px);}
+.s7{transform:rotate(180deg) translateY(-34px);}
+.s8{transform:rotate(210deg) translateY(-34px);}
+.s9{transform:rotate(240deg) translateY(-34px);}
+.s10{transform:rotate(270deg) translateY(-34px);}
+.s11{transform:rotate(300deg) translateY(-34px);}
+.s12{transform:rotate(330deg) translateY(-34px);}
+
+.sun-centre{
+  position:absolute;
+  width:42px;
+  height:42px;
+  background:#6b3e1f;
+  border-radius:50%;
+  left:27px;
+  top:27px;
   z-index:3;
 }
 
-.hyacinth .petal{
-  width:18px;
-  height:18px;
+/* speech bubbles beside flowers */
+
+.bubble{
+  position:absolute;
+  width:230px;
+  background:rgba(255,255,255,0.95);
+  border-radius:20px;
+  padding:14px 16px;
+  font-size:15px;
+  line-height:1.35;
+  box-shadow:0 10px 30px rgba(0,0,0,0.18);
+  z-index:20;
+  opacity:0;
+  animation:bubbleIn .7s forwards, bubbleOut .8s forwards 11s;
+}
+
+.bubble:after{
+  content:"";
+  position:absolute;
+  bottom:-12px;
+  left:28px;
+  width:0;
+  height:0;
+  border-left:12px solid transparent;
+  border-right:12px solid transparent;
+  border-top:14px solid rgba(255,255,255,0.95);
+}
+
+@keyframes bubbleIn{
+  to{opacity:1; transform:translateY(-8px);}
+}
+
+@keyframes bubbleOut{
+  to{opacity:0; transform:translateY(-20px);}
+}
+
+/* white and orange cat */
+
+#cat{
+  position:absolute;
+  bottom:78px;
+  left:68%;
+  width:170px;
+  height:135px;
+  z-index:10;
+  display:none;
+  animation:catAppear 1.2s forwards, catBreathe 3s ease-in-out infinite 1.2s;
+}
+
+@keyframes catAppear{
+  from{opacity:0; transform:translateY(20px) scale(.8);}
+  to{opacity:1; transform:translateY(0) scale(1);}
+}
+
+@keyframes catBreathe{
+  50%{transform:translateY(-3px);}
+}
+
+.cat-body{
+  position:absolute;
+  bottom:0;
+  left:38px;
+  width:95px;
+  height:62px;
+  background:#fff7ed;
+  border-radius:50px 50px 35px 35px;
+  border:2px solid #d8a15e;
+}
+
+.cat-orange-body{
+  position:absolute;
+  right:8px;
+  top:7px;
+  width:36px;
+  height:28px;
+  background:#e8993a;
   border-radius:50%;
 }
 
-.hyacinth .p1{left:20px;top:0;}
-.hyacinth .p2{left:8px;top:20px;}
-.hyacinth .p3{left:32px;top:20px;}
-.hyacinth .p4{left:20px;top:38px;}
-.hyacinth .p5{left:20px;top:19px;}
-.hyacinth .centre{display:none;}
-
-.forget .p1{top:-18px;left:14px;}
-.forget .p2{bottom:-18px;left:14px;}
-.forget .p3{left:-12px;top:8px;transform:rotate(90deg);}
-.forget .p4{right:-12px;top:8px;transform:rotate(90deg);}
-.forget .p5{display:none;}
-
-.sunflower .bloom{
-  width:82px;
-  height:82px;
-  left:20px;
-  bottom:165px;
+.cat-head{
+  position:absolute;
+  bottom:48px;
+  left:56px;
+  width:62px;
+  height:56px;
+  background:#fff7ed;
+  border-radius:50%;
+  border:2px solid #d8a15e;
 }
 
-.sunflower .petal{
-  background:#f5c542;
-  width:24px;
-  height:48px;
-  left:29px;
-  top:17px;
-  transform-origin:center 24px;
+.cat-orange-head{
+  position:absolute;
+  right:0;
+  top:0;
+  width:30px;
+  height:28px;
+  background:#e8993a;
+  border-radius:0 50% 45% 50%;
 }
 
-.sunflower .p1{transform:rotate(0deg) translateY(-28px);}
-.sunflower .p2{transform:rotate(45deg) translateY(-28px);}
-.sunflower .p3{transform:rotate(90deg) translateY(-28px);}
-.sunflower .p4{transform:rotate(135deg) translateY(-28px);}
-.sunflower .p5{transform:rotate(180deg) translateY(-28px);}
-.sunflower .p6{transform:rotate(225deg) translateY(-28px);}
-.sunflower .p7{transform:rotate(270deg) translateY(-28px);}
-.sunflower .p8{transform:rotate(315deg) translateY(-28px);}
+.cat-ear{
+  position:absolute;
+  width:0;
+  height:0;
+  border-left:13px solid transparent;
+  border-right:13px solid transparent;
+  border-bottom:25px solid #fff7ed;
+  top:-15px;
+  z-index:-1;
+}
 
-.sunflower .centre{
-  width:34px;
-  height:34px;
-  background:#6b3e1f;
-  top:24px;
-  left:24px;
+.cat-ear.left{left:2px;transform:rotate(-18deg);}
+.cat-ear.right{right:2px;transform:rotate(18deg);border-bottom-color:#e8993a;}
+
+.cat-eye{
+  position:absolute;
+  top:25px;
+  width:7px;
+  height:7px;
+  background:#2b2b2b;
+  border-radius:50%;
+  animation:blink 4s infinite;
+}
+
+.cat-eye.left{left:18px;}
+.cat-eye.right{right:18px;}
+
+@keyframes blink{
+  0%,92%,100%{height:7px;}
+  95%{height:1px;}
+}
+
+.cat-nose{
+  position:absolute;
+  top:34px;
+  left:28px;
+  width:7px;
+  height:5px;
+  background:#dd8b8b;
+  border-radius:50%;
+}
+
+.whisker{
+  position:absolute;
+  width:22px;
+  height:1px;
+  background:#444;
+  top:37px;
+}
+
+.whisker.left1{left:-12px;transform:rotate(8deg);}
+.whisker.left2{left:-12px;top:43px;transform:rotate(-8deg);}
+.whisker.right1{right:-12px;transform:rotate(-8deg);}
+.whisker.right2{right:-12px;top:43px;transform:rotate(8deg);}
+
+.cat-tail{
+  position:absolute;
+  bottom:26px;
+  left:8px;
+  width:55px;
+  height:26px;
+  border:9px solid #e8993a;
+  border-right:none;
+  border-bottom:none;
+  border-radius:55px 0 0 0;
+  transform-origin:right bottom;
+  animation:tailMove 2.8s ease-in-out infinite;
+}
+
+@keyframes tailMove{
+  0%,100%{transform:rotate(0deg);}
+  50%{transform:rotate(8deg);}
+}
+
+#finalMessage{
+  position:fixed;
+  top:18px;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+  max-width:630px;
+  background:rgba(255,255,255,0.92);
+  border-radius:24px;
+  padding:20px;
+  text-align:center;
+  box-shadow:0 12px 35px rgba(0,0,0,0.16);
+  display:none;
+  z-index:40;
 }
 
 .fallingPetal{
@@ -245,7 +476,7 @@ button{
   border-radius:50%;
   background:#f6c8d8;
   animation:fall 7s linear forwards;
-  z-index:10;
+  z-index:45;
 }
 
 @keyframes fall{
@@ -253,50 +484,6 @@ button{
     transform:translateY(110vh) rotate(360deg);
     opacity:0;
   }
-}
-
-.cat{
-  position:fixed;
-  bottom:74px;
-  left:-120px;
-  width:70px;
-  height:35px;
-  background:#2f2f2f;
-  border-radius:50px 50px 35px 35px;
-  z-index:4;
-  animation:walk 10s linear forwards;
-}
-
-.cat:before{
-  content:"";
-  position:absolute;
-  width:28px;
-  height:28px;
-  background:#2f2f2f;
-  border-radius:50%;
-  right:-10px;
-  top:-10px;
-}
-
-.cat:after{
-  content:"";
-  position:absolute;
-  width:35px;
-  height:6px;
-  background:#2f2f2f;
-  left:-28px;
-  top:12px;
-  border-radius:10px;
-  transform:rotate(25deg);
-}
-
-@keyframes walk{
-  to{left:110%;}
-}
-
-#endingText{
-  display:none;
-  margin-top:20px;
 }
 </style>
 </head>
@@ -306,32 +493,46 @@ button{
 <div id="intro">
   <div class="card">
     <h1>Taiga's Garden</h1>
-    <p>Happy two months, amore mio</p>
-    <p>Here's a little garden made for you.</p>
+    <p>Happy Two Months, Amore.</p>
+    <p>A little garden made for you.</p>
     <button onclick="enterGarden()">Enter the Garden</button>
   </div>
 </div>
 
-<div class="garden" id="garden"></div>
-<div class="soil"></div>
+<div id="topControls">
+  <h1>Taiga's Garden</h1>
+  <button id="growButton" onclick="growFlower()">Plant the Purple Hyacinth</button>
+</div>
 
-<div class="page">
-  <div class="card" id="mainCard">
-    <h1>Your Garden</h1>
-    <p>Plant each seed and let the garden grow.</p>
-
-    <button id="growButton" onclick="growFlower()">Plant the Purple Hyacinth</button>
-
-    <div id="messageBox"></div>
-
-    <div id="endingText">
-      <h2>Garden Complete</h2>
-      <p>Five flowers grown.</p>
-      <p>Five little pieces of my heart shared.</p>
-      <p>Again, happy two months, my beloved.</p>
-      <p>Thank you for helping this little garden grow.</p>
+<div class="garden" id="garden">
+  <div id="cat">
+    <div class="cat-tail"></div>
+    <div class="cat-body">
+      <div class="cat-orange-body"></div>
+    </div>
+    <div class="cat-head">
+      <div class="cat-orange-head"></div>
+      <div class="cat-ear left"></div>
+      <div class="cat-ear right"></div>
+      <div class="cat-eye left"></div>
+      <div class="cat-eye right"></div>
+      <div class="cat-nose"></div>
+      <div class="whisker left1"></div>
+      <div class="whisker left2"></div>
+      <div class="whisker right1"></div>
+      <div class="whisker right2"></div>
     </div>
   </div>
+</div>
+
+<div class="soil"></div>
+
+<div id="finalMessage">
+  <h2>Garden Complete</h2>
+  <p>Five flowers grown.</p>
+  <p>Five little pieces of my heart shared.</p>
+  <p>Happy Two Months, Amore.</p>
+  <p>Thank you for helping this little garden grow.</p>
 </div>
 
 <audio id="song" src="Coez.mp3" loop></audio>
@@ -343,39 +544,53 @@ const flowers = [
   {
     type:"hyacinth",
     colour:"#8b5cf6",
-    left:"10%",
+    left:"8%",
+    bubbleLeft:"12%",
+    bubbleBottom:"360px",
+    button:"Plant the White Hyacinth",
     message:"I love your gentle, pensive eyes, your adorable cheeky smile, and your voice. They are some of the things I never get tired of."
   },
   {
     type:"hyacinth",
     colour:"#fffaf0",
-    left:"27%",
+    left:"25%",
+    bubbleLeft:"26%",
+    bubbleBottom:"352px",
+    button:"Plant the First Forget-Me-Not",
     message:"One of my favourite things is seeing you smile or laugh. I still think about sitting together on the grass by the fountain, and playing Street Fighter at Firebug for the first time."
   },
   {
     type:"forget",
     colour:"#7eb6ff",
-    left:"45%",
-    message:"You reminded me what it feels like to truly love someone again and for that I am grateful."
+    left:"43%",
+    bubbleLeft:"41%",
+    bubbleBottom:"350px",
+    button:"Plant the Second Forget-Me-Not",
+    message:"You reminded me what it feels like to truly love someone again. That is something I will always be grateful for."
   },
   {
     type:"forget",
-    colour:"#ffffff",
-    left:"62%",
+    colour:"#9fcaff",
+    left:"59%",
+    bubbleLeft:"54%",
+    bubbleBottom:"344px",
+    button:"Plant the Sunflower",
     message:"I am excited to make more memories with you, share more experiences, and discover all the little moments we have not had yet."
   },
   {
     type:"sunflower",
     colour:"#f5c542",
-    left:"79%",
+    left:"76%",
+    bubbleLeft:"64%",
+    bubbleBottom:"360px",
+    button:"",
     message:"These first two months have meant more than you realise, and more than I can properly put into words."
   }
 ];
 
 function enterGarden(){
   document.getElementById("intro").style.display = "none";
-  document.getElementById("mainCard").style.display = "block";
-
+  document.getElementById("topControls").style.display = "block";
   document.getElementById("song").play().catch(() => {});
 }
 
@@ -386,86 +601,94 @@ function growFlower(){
   const garden = document.getElementById("garden");
   const flower = document.createElement("div");
 
-  flower.className = "flower " + data.type;
+  flower.className = "flower";
   flower.style.left = data.left;
+
+  if(data.type === "hyacinth"){
+    flower.innerHTML = `
+      <div class="stem"></div>
+      <div class="leaf left"></div>
+      <div class="leaf right"></div>
+      <div class="hyacinth-bloom">
+        ${Array.from({length:12}, (_,i)=>`<div class="hy-petal hy${i+1}"><div class="hy-highlight"></div></div>`).join("")}
+      </div>
+    `;
+  }
+
+  if(data.type === "forget"){
+    flower.innerHTML = `
+      <div class="stem"></div>
+      <div class="leaf left"></div>
+      <div class="leaf right"></div>
+      <div class="forget-bloom">
+        ${["one","two","three"].map(pos=>`
+        <div class="small-flower ${pos}">
+          <div class="fm-petal fm1"></div>
+          <div class="fm-petal fm2"></div>
+          <div class="fm-petal fm3"></div>
+          <div class="fm-petal fm4"></div>
+          <div class="fm-petal fm5"></div>
+          <div class="fm-centre"></div>
+        </div>`).join("")}
+      </div>
+    `;
+  }
 
   if(data.type === "sunflower"){
     flower.innerHTML = `
       <div class="stem"></div>
       <div class="leaf left"></div>
       <div class="leaf right"></div>
-      <div class="bloom">
-        <div class="petal p1"></div>
-        <div class="petal p2"></div>
-        <div class="petal p3"></div>
-        <div class="petal p4"></div>
-        <div class="petal p5"></div>
-        <div class="petal p6"></div>
-        <div class="petal p7"></div>
-        <div class="petal p8"></div>
-        <div class="centre"></div>
-      </div>
-    `;
-  } else {
-    flower.innerHTML = `
-      <div class="stem"></div>
-      <div class="leaf left"></div>
-      <div class="leaf right"></div>
-      <div class="bloom">
-        <div class="petal p1"></div>
-        <div class="petal p2"></div>
-        <div class="petal p3"></div>
-        <div class="petal p4"></div>
-        <div class="petal p5"></div>
-        <div class="centre"></div>
+      <div class="sunflower-bloom">
+        ${Array.from({length:12}, (_,i)=>`<div class="sun-petal s${i+1}"></div>`).join("")}
+        <div class="sun-centre"></div>
       </div>
     `;
   }
 
   garden.appendChild(flower);
 
-  flower.querySelectorAll(".petal").forEach(petal => {
-    petal.style.background = data.colour;
-  });
+  flower.querySelectorAll(".hy-petal").forEach(x => x.style.background = data.colour);
+  flower.querySelectorAll(".fm-petal").forEach(x => x.style.background = data.colour);
 
-  const messageBox = document.getElementById("messageBox");
-  messageBox.style.display = "block";
-  messageBox.innerHTML = data.message;
+  showBubble(data);
 
   flowerCount++;
 
   const button = document.getElementById("growButton");
 
-  if(flowerCount === 1){
-    button.innerHTML = "Plant the White Hyacinth";
-  } else if(flowerCount === 2){
-    button.innerHTML = "Plant the Blue Forget-Me-Not";
-  } else if(flowerCount === 3){
-    button.innerHTML = "Plant the White Forget-Me-Not";
-    showCat();
-  } else if(flowerCount === 4){
-    button.innerHTML = "Plant the Sunflower";
+  if(flowerCount < flowers.length){
+    button.innerHTML = data.button;
   } else {
     button.style.display = "none";
-    setTimeout(showEnding, 2200);
+    setTimeout(showEnding, 7000);
+  }
+
+  if(flowerCount === 3){
+    document.getElementById("cat").style.display = "block";
   }
 }
 
-function showCat(){
-  const cat = document.createElement("div");
-  cat.className = "cat";
-  document.body.appendChild(cat);
+function showBubble(data){
+  document.querySelectorAll(".bubble").forEach(b => b.remove());
 
-  setTimeout(() => {
-    cat.remove();
-  }, 10000);
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+  bubble.style.left = data.bubbleLeft;
+  bubble.style.bottom = data.bubbleBottom;
+  bubble.innerHTML = data.message;
+
+  document.body.appendChild(bubble);
+
+  setTimeout(() => bubble.remove(), 12000);
 }
 
 function showEnding(){
-  document.getElementById("endingText").style.display = "block";
+  document.getElementById("topControls").style.display = "none";
+  document.getElementById("finalMessage").style.display = "block";
 
-  for(let i = 0; i < 90; i++){
-    setTimeout(createFallingPetal, i * 80);
+  for(let i=0;i<100;i++){
+    setTimeout(createFallingPetal, i * 90);
   }
 }
 
@@ -476,9 +699,7 @@ function createFallingPetal(){
   petal.style.background = Math.random() > 0.5 ? "#f6c8d8" : "#fffaf0";
   document.body.appendChild(petal);
 
-  setTimeout(() => {
-    petal.remove();
-  }, 7000);
+  setTimeout(() => petal.remove(), 7000);
 }
 </script>
 

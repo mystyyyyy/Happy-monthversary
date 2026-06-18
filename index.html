@@ -37,7 +37,6 @@ body{
   padding:30px;
   text-align:center;
   box-shadow:0 15px 40px rgba(0,0,0,0.15);
-  backdrop-filter:blur(6px);
 }
 
 h1,h2{
@@ -58,8 +57,18 @@ button{
   font-family:"Bodoni MT", Georgia, serif;
 }
 
-button:hover{
-  background:#a94469;
+#intro{
+  position:fixed;
+  inset:0;
+  z-index:20;
+  background:linear-gradient(to bottom,#dbeeff,#fff4f8);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+#mainCard{
+  display:none;
 }
 
 #messageBox{
@@ -176,7 +185,6 @@ button:hover{
   z-index:3;
 }
 
-/* hyacinth cluster */
 .hyacinth .petal{
   width:18px;
   height:18px;
@@ -190,14 +198,12 @@ button:hover{
 .hyacinth .p5{left:20px;top:19px;}
 .hyacinth .centre{display:none;}
 
-/* forget-me-not */
 .forget .p1{top:-18px;left:14px;}
 .forget .p2{bottom:-18px;left:14px;}
 .forget .p3{left:-12px;top:8px;transform:rotate(90deg);}
 .forget .p4{right:-12px;top:8px;transform:rotate(90deg);}
 .forget .p5{display:none;}
 
-/* sunflower */
 .sunflower .bloom{
   width:82px;
   height:82px;
@@ -288,13 +294,23 @@ button:hover{
   to{left:110%;}
 }
 
-#ending{
+#endingText{
   display:none;
+  margin-top:20px;
 }
 </style>
 </head>
 
 <body>
+
+<div id="intro">
+  <div class="card">
+    <h1>Taiga's Garden</h1>
+    <p>Happy Two Months, Amore.</p>
+    <p>A little garden made for you.</p>
+    <button onclick="enterGarden()">Enter the Garden</button>
+  </div>
+</div>
 
 <div class="garden" id="garden"></div>
 <div class="soil"></div>
@@ -302,24 +318,23 @@ button:hover{
 <div class="page">
   <div class="card" id="mainCard">
     <h1>Taiga's Garden</h1>
-    <p>Happy Two Months, Amore.</p>
     <p>Plant each seed and let the garden grow.</p>
 
-    <button id="growButton" onclick="growFlower()">Plant the First Seed</button>
+    <button id="growButton" onclick="growFlower()">Plant the Purple Hyacinth</button>
 
     <div id="messageBox"></div>
-  </div>
 
-  <div class="card" id="ending">
-    <h2>Garden Complete</h2>
-    <p>Five flowers grown.</p>
-    <p>Five little pieces of my heart shared.</p>
-    <p>Happy Two Months, Amore.</p>
-    <p>Thank you for helping this little garden grow.</p>
+    <div id="endingText">
+      <h2>Garden Complete</h2>
+      <p>Five flowers grown.</p>
+      <p>Five little pieces of my heart shared.</p>
+      <p>Happy Two Months, Amore.</p>
+      <p>Thank you for helping this little garden grow.</p>
+    </div>
   </div>
 </div>
 
-<audio id="song" src="Grandine.mp3"></audio>
+<audio id="song" src="Coez.mp3" loop></audio>
 
 <script>
 let flowerCount = 0;
@@ -356,6 +371,13 @@ const flowers = [
     message:"These first two months have meant more than you realise, and more than I can properly put into words."
   }
 ];
+
+function enterGarden(){
+  document.getElementById("intro").style.display = "none";
+  document.getElementById("mainCard").style.display = "block";
+
+  document.getElementById("song").play().catch(() => {});
+}
 
 function growFlower(){
   if(flowerCount >= flowers.length) return;
@@ -402,8 +424,7 @@ function growFlower(){
 
   garden.appendChild(flower);
 
-  const petals = flower.querySelectorAll(".petal");
-  petals.forEach(petal => {
+  flower.querySelectorAll(".petal").forEach(petal => {
     petal.style.background = data.colour;
   });
 
@@ -416,16 +437,16 @@ function growFlower(){
   const button = document.getElementById("growButton");
 
   if(flowerCount === 1){
-    button.innerHTML = "Grow the White Hyacinth";
+    button.innerHTML = "Plant the White Hyacinth";
   } else if(flowerCount === 2){
-    button.innerHTML = "Grow the Blue Forget-Me-Not";
+    button.innerHTML = "Plant the Blue Forget-Me-Not";
   } else if(flowerCount === 3){
-    button.innerHTML = "Grow the White Forget-Me-Not";
+    button.innerHTML = "Plant the White Forget-Me-Not";
     showCat();
   } else if(flowerCount === 4){
-    button.innerHTML = "Grow the Sunflower";
+    button.innerHTML = "Plant the Sunflower";
   } else {
-    button.innerHTML = "Complete the Garden";
+    button.style.display = "none";
     setTimeout(showEnding, 2200);
   }
 }
@@ -441,10 +462,7 @@ function showCat(){
 }
 
 function showEnding(){
-  document.getElementById("mainCard").style.display = "none";
-  document.getElementById("ending").style.display = "block";
-
-  document.getElementById("song").play().catch(() => {});
+  document.getElementById("endingText").style.display = "block";
 
   for(let i = 0; i < 90; i++){
     setTimeout(createFallingPetal, i * 80);
